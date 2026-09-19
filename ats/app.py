@@ -10,7 +10,6 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from modules.parser import extract_text, detect_sections, missing_sections
-from modules.preprocess import keyword_frequency
 from modules.similarity import similarity_score
 from modules.skills import compare_skills
 from modules.grammar import check_grammar
@@ -147,36 +146,7 @@ def _render(analysis: Dict, resume_text: str, jd_text: str):
                 st.markdown(f"**{m.get('skill','')}** — {m.get('why_it_matters','')}")
         else:
             st.write("None detected")
-
-   # ---- Keyword frequency ----
-    st.subheader("🔑 Keyword Frequency (Resume)")
-    kf = keyword_frequency(resume_text, top_n=20)
-    
-    if kf:
-        # 1. Handle both dictionary and list return types from the preprocess module
-        if isinstance(kf, dict):
-            kf_df = pd.DataFrame(list(kf.items()), columns=["Keyword", "Count"])
-        else:
-            kf_df = pd.DataFrame(kf, columns=["Keyword", "Count"])
             
-        # 2. Sort values so the largest bar is at the top
-        kf_df = kf_df.sort_values(by="Count", ascending=True)
-        
-        # 3. Create a horizontal bar chart
-        fig = px.bar(
-            kf_df, 
-            x="Count", 
-            y="Keyword", 
-            orientation="h", 
-            title="Top Keywords",
-            color="Count",
-            color_continuous_scale="Blues"
-        )
-        st.plotly_chart(fig, use_container_width=True)
-    else:
-        # 4. Fallback message if extraction returns empty
-        st.info("No keywords extracted. The resume text might be too short or unreadable.")
-        
     # ---- Skills gap viz ----
     gap = compare_skills(resume_text, jd_text)
     if gap["jd_skills"]:
