@@ -59,9 +59,3 @@ def tokenize_lemmatize(text: str) -> List[str]:
             continue
         out.append(lemma)
     return out
-
-
-def keyword_frequency(text: str, top_n: int = 20) -> List[tuple]:
-    from collections import Counter
-    tokens = tokenize_lemmatize(text)
-    return Counter(tokens).most_common(top_n)
