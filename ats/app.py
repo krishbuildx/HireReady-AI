@@ -181,7 +181,7 @@ def _render(analysis: Dict, resume_text: str, jd_text: str):
 
     # ---- PDF report ----
     st.divider()
-    pdf = build_pdf_report(analysis, sim, kf, gap)
+    pdf = build_pdf_report(analysis, sim, None, gap)
     st.download_button(
         "⬇️ Download PDF Report",
         data=pdf,
