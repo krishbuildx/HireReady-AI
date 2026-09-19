@@ -9,7 +9,7 @@ from typing import Dict, Optional
 
 import google.generativeai as genai
 
-MODEL_NAME = os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite")
+MODEL_NAME = os.getenv("GEMINI_MODEL", "gemini-3.5")
 
 def configure(api_key: Optional[str] = None) -> bool:
     key = api_key or os.getenv("GEMINI_API_KEY")
